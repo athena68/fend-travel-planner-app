@@ -1,9 +1,14 @@
 /* Global Variables */
+import './styles/style.scss'
+
 const apiKey = '6e14c746901b0568214a1838f72764f1';
 const defaultCityName = 'Hanoi,VN';
 const baseUrl='http://api.openweathermap.org/data/2.5/weather?q=';
 const appApiID=`&appid=${apiKey}&units=metric`;
 // const apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
+
+
+alert("Hey, I exist!")
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -15,7 +20,7 @@ function performAction(e) {
     const userFeeling = document.getElementById('feelings').value;
     const cityName = document.getElementById('city').value;
 
-    url=baseUrl+defaultCityName+appApiID;
+    let url=baseUrl+defaultCityName+appApiID;
 
     if (cityName != '') {
         url=baseUrl+cityName+appApiID;
@@ -24,7 +29,7 @@ function performAction(e) {
     getWeatherData(url)
     .then(function(data) {
 
-        newData = {
+        let newData = {
             temperature: data['main'].temp,
             date: newDate,
             userFeel: userFeeling
@@ -83,4 +88,11 @@ const updateUI = async() => {
     } catch(error) {
         console.log('error: ', error)
     }
+}
+
+export {
+    performAction,
+    postData,
+    getWeatherData,
+    updateUI
 }

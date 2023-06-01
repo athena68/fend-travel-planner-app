@@ -1,7 +1,10 @@
-# Weather-Journal App Project
+# Travel Planner App Project
 
 ## Overview
-This project requires you to create an asynchronous web app that uses Web API and user data to dynamically update the UI. 
+A Web App help you to create travel planner for the place you want to travel to.
+It provides
+- Image of destination
+- Weather forecast of destination
 
 ## Instructions
 This will require modifying the `server.js` file and the `website/app.js` file. You can see `index.html` for element references, and once you are finished with the project steps, you can use `style.css` to style your application to customized perfection.
