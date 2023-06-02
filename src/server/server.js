@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+let projectData = {};
 
 // Require Express to run server and routes
 const express = require('express');
@@ -48,9 +48,10 @@ const data = [];
 function addData(req, res) {
 
     projectData = {
-        temperature: req.body.temperature,
-        date: req.body.date,
-        userFeel: req.body.userFeel
+        name: req.body.name,
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        country: req.body.country
     }
     data.push(projectData);
 }
