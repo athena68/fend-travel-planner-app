@@ -1,3 +1,18 @@
+
+const dotenv = require("dotenv");
+dotenv.config();
+
+// Geonames API
+const geoNameBaseUrl = "http://api.geonames.org/searchJSON?q=";
+const geonamesUser = `&username=${process.env.GEONAME_API_KEY}`;
+const geonamesParams = "&maxRows=10";
+//Weatherbit API
+const weatherBitBaseUrl = "https://api.weatherbit.io/v2.0/forecast/daily?";
+const weatherBitKey = `&key=${process.env.WEATHER_API_KEY}`;
+//Pixabay API
+const pixabayBaseUrl = "https://pixabay.com/api/";
+const pixabayKey = `?key=${process.env.PIXABAY_API_KEY}`;
+
 // Setup empty JS object to act as endpoint for all routes
 let projectData = {};
 
@@ -6,6 +21,8 @@ const express = require('express');
 
 // Start up an instance of app
 const app = express();
+
+const fetch = require("node-fetch");
 
 /* Middleware*/
 const bodyParser = require('body-parser');
@@ -41,17 +58,36 @@ function getData(req, res) {
 }
 
 //POST route
-app.post('/addData', addData);
+app.post('/addNewTrip', addNewTrip);
 
-const data = [];
+async function addNewTrip(req, res) {
+    projectData = req.body;
+    console.log("=== addNewTrip === : req projectData", projectData);
 
-function addData(req, res) {
+    let fetchUrl =`${geoNameBaseUrl}${projectData.city}${geonamesParams}${geonamesUser}`;
 
-    projectData = {
-        name: req.body.name,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
-        country: req.body.country
+    console.log(fetchUrl);
+
+    const response = await fetch(fetchUrl);
+
+    try {
+      const data = await response.json();
+      console.log(data);
+
+      if (data.totalResultsCount != 0) {
+        projectData["long"] = data.geonames[0].lng;
+        projectData["lat"] = data.geonames[0].lat;
+        projectData["name"] = data.geonames[0].name;
+        projectData["country"] = data.geonames[0].countryName;
+        projectData["code"] = data.geonames[0].countryCode;
+        console.log("=== addNewTrip === : added projectData ", projectData);
+      } else {
+        res.statusMessage = "City not found";
+        res.status(400).end();
+      }
+      res.send(projectData);
+    } catch (err) {
+      console.log("error", err);
     }
-    data.push(projectData);
-}
+  }
+

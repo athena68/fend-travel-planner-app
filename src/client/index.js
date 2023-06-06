@@ -1,4 +1,4 @@
-import { performAction } from './js/app.js'
+import { handleSubmit } from './js/app.js'
 import { postData } from './js/app.js'
 import { getGeoData } from './js/app.js'
 import { updateUI } from './js/app.js'
@@ -6,11 +6,10 @@ import { updateUI } from './js/app.js'
 
 import './styles/style.scss'
 
-document.getElementById('generate').addEventListener('click', performAction);
+document.getElementById('generate').addEventListener('click', handleSubmit);
 
 export {
-    performAction,
+    handleSubmit,
     postData,
-    getGeoData,
     updateUI
 }

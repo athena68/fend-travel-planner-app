@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<title>Weather Journal</title>
+<title>Travel Planner</title>
 <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
 </head>
  <body>
 <div id = "app">
   <div class ="holder headline">
-    Weather Journal App
+    Travel Planner
   </div>
   <div class ="holder zip">
-    <label for="zip">Enter City here</label>
-    <input type="text" id="city" placeholder="ex: Hanoi,VN">
+    <label for="cityName">Enter City here</label>
+    <input type="text" id="city" placeholder="ex: Hanoi">
   </div>
   <div class ="holder feel">
-    <label for="feelings">How are you feeling today?</label>
-    <textarea class= "myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea>
-    <button id="generate" type = "submit"> Generate </button>
+    <label for="tripStartDate">What is your trip start date?</label>
+    <input type="date" class= "myInput" id="feelings" placeholder="Enter your trip start date">
+    <button id="generate" type = "submit"> Submit </button>
   </div>
   <div class ="holder entry">
-    <div class = "title">Most Recent Entry</div>
+    <div class = "title" id="tripDashboard">Trip Details</div>
    <div id = "entryHolder">
-    <div id = "date"></div>
    <div id = "temp"></div>
+   <div id = "date"></div>
    <div id = "content"></div>
   </div>
 </div>
