@@ -14,12 +14,18 @@ async function handleSubmit(e) {
         cityName=defaultCityName;
     }
 
-    const req_status = await postData("/addNewTrip", {
+    const res = await postData("/addNewTrip", {
         city: cityName,
         date: tripStartDate,
     })
 
-    updateUI(req_status);
+    //Get weather data
+    if (200 === res.status) {
+        // res = await getData('/getWeatherData');
+        await getData('/getWeatherData');
+    }
+
+    updateUI(res);
 }
 
 //Async POST
@@ -35,34 +41,58 @@ const postData = async ( url = '', data = {})=>{
   });
 
     try {
-      let status = response.status;
-      return status;
+      console.log("${url} responded status => " + response.statusText);
+      return response;
     }catch(error) {
         console.log("error", error);
     }
 };
 
+//Async GET
+const getData = async (url = '') =>{
+
+    const response = await fetch(url, {
+        method: 'GET',
+        mode: "cors",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    try {
+      let status = response.status;
+      return status;
+    } catch(error) {
+        console.log("error", error);
+    }
+};
+
+
 //Update UI
-const updateUI = async(req_status) => {
+const updateUI = async(res_data) => {
     const request = await fetch('/getData');
 
     try {
         const data = await request.json();
 
         //reset dashboard
-        document.getElementById('tripDashboard').innerHTML = "";
-        document.getElementById('temp').innerHTML = "";
+        document.getElementById('boardTitle').innerHTML = "";
+        document.getElementById('tripTitle').innerHTML = "";
         document.getElementById('date').innerHTML = "";
+        document.getElementById('currentWeather').innerHTML = "";
+        document.getElementById('weatherDescription').innerHTML = "";
+        document.getElementById('weatherIcon').src = "";
 
-        if (req_status === 200) {
-            document.getElementById('tripDashboard').innerHTML = "Trip details";
-            document.getElementById('temp').innerHTML = "Your trip to: " + data.name + ", country: " + data.country;
+        if (res_data.status === 200) {
+            document.getElementById('boardTitle').innerHTML = "Trip details";
+            document.getElementById('tripTitle').innerHTML = "Your trip to: " + data.name + ", country: " + data.country;
             document.getElementById('date').innerHTML = "Departuring: " + data.date;
-            // document.getElementById('content').innerHTML = data.userFeel;
+            document.getElementById('currentWeather').innerHTML = "Current weather";
+            document.getElementById('weatherIcon').src = `https://www.weatherbit.io/static/img/icons/${data.icon}.png`;
+            document.getElementById('weatherDescription').innerHTML = data.description + ", temperature: " + data.temp + "°C";
         } else {
-            if (req_status === 400) {
-                document.getElementById('tripDashboard').innerHTML = "Error: " + data.city + " not found";
-            }
+            document.getElementById('boardTitle').innerHTML = "Error: " + res_data.statusText;
+
         }
     } catch(error) {
         console.log('error: ', error)

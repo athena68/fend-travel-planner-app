@@ -61,33 +61,73 @@ function getData(req, res) {
 app.post('/addNewTrip', addNewTrip);
 
 async function addNewTrip(req, res) {
-    projectData = req.body;
-    console.log("=== addNewTrip === : req projectData", projectData);
+  projectData = req.body;
+  console.log("=== addNewTrip === : req projectData", projectData);
 
-    let fetchUrl =`${geoNameBaseUrl}${projectData.city}${geonamesParams}${geonamesUser}`;
+  let fetchUrl =`${geoNameBaseUrl}${projectData.city}${geonamesParams}${geonamesUser}`;
 
-    console.log(fetchUrl);
+  console.log(fetchUrl);
 
-    const response = await fetch(fetchUrl);
+  const response = await fetch(fetchUrl);
 
-    try {
-      const data = await response.json();
-      console.log(data);
+  try {
+    const data = await response.json();
+    console.log(data);
 
-      if (data.totalResultsCount != 0) {
-        projectData["long"] = data.geonames[0].lng;
-        projectData["lat"] = data.geonames[0].lat;
-        projectData["name"] = data.geonames[0].name;
-        projectData["country"] = data.geonames[0].countryName;
-        projectData["code"] = data.geonames[0].countryCode;
-        console.log("=== addNewTrip === : added projectData ", projectData);
-      } else {
-        res.statusMessage = "City not found";
-        res.status(400).end();
-      }
+    if (data.totalResultsCount != 0) {
+      projectData["long"] = data.geonames[0].lng;
+      projectData["lat"] = data.geonames[0].lat;
+      projectData["name"] = data.geonames[0].name;
+      projectData["country"] = data.geonames[0].countryName;
+      projectData["code"] = data.geonames[0].countryCode;
+      console.log("=== addNewTrip === : added projectData ", projectData);
       res.send(projectData);
-    } catch (err) {
-      console.log("error", err);
+    } else {
+      res.statusMessage = "City not found";
+      res.status(400).end();
     }
+  } catch (err) {
+    console.log("addNewTrip error: ", err);
   }
+}
+
+app.get('/getData', getData);
+
+function getData(req, res) {
+    res.send(projectData);
+    console.log("=== getProjectData === ^^^^^^^^^ ");
+    console.log(projectData);
+    console.log("=== getProjectData === ::::::::: ");
+}
+
+//POST route
+app.get('/getWeatherData', getWeatherData);
+
+async function getWeatherData(req, res) {
+
+  const lat  = projectData.lat;
+  const long = projectData.long;
+  const city = projectData.city;
+
+  console.log("=== getWeatherData === : city " + city + "[ " + lat + ", " + long + " ]");
+
+  let fetchUrl =`${weatherBitBaseUrl}lat=${lat}&lon=${long}${weatherBitKey}`;
+
+  console.log(fetchUrl);
+
+  const response = await fetch(fetchUrl);
+
+  try {
+    const data = await response.json();
+
+    projectData["icon"] = data.data[0].weather.icon;
+    projectData["description"] = data.data[0].weather.description;
+    projectData["temp"] = data.data[0].temp;
+    console.log(projectData);
+    res.send(projectData);
+  } catch (err) {
+    console.log("getWeatherData error: ", err);
+  }
+}
+
 
