@@ -12,7 +12,7 @@ const weatherBitKey = `&key=${process.env.WEATHER_API_KEY}`;
 //Pixabay API
 const pixabayBaseUrl = "https://pixabay.com/api/";
 const pixabayKey = `?key=${process.env.PIXABAY_API_KEY}`;
-const pixabayParams = "&category=people&image_type=photo&orientation=horizontal&safesearch=true&per_page=100";
+const pixabayParams = "&category=buildings&image_type=photo&orientation=horizontal&safesearch=true&per_page=100";
 
 // Setup empty JS object to act as endpoint for all routes
 let projectData = {};
@@ -40,7 +40,7 @@ app.use(express.static('dist'));
 
 
 // Setup Server
-const port = 8080;
+const port = 8081;
 
 function serverListening() {
     console.log("Server started");
@@ -124,6 +124,8 @@ async function getWeatherData(req, res) {
     projectData["icon"] = data.data[0].weather.icon;
     projectData["description"] = data.data[0].weather.description;
     projectData["temp"] = data.data[0].temp;
+    projectData["high_temp"] = data.data[0].high_temp;
+    projectData["low_temp"] = data.data[0].low_temp;
     console.log(projectData);
     res.send(projectData);
   } catch (err) {

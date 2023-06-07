@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width">
-<title>Travel Planner</title>
+<title>Travel Planner App</title>
 <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
 </head>
  <body>
@@ -11,30 +11,33 @@
   <div class ="holder headline">
     Travel Planner
   </div>
-  <div class ="holder zip">
-    <label for="cityName">Enter City here</label>
-    <input type="text" id="city" placeholder="ex: Hanoi">
-  </div>
-  <div class ="holder feel">
-    <label for="tripStartDate">What is your trip start date?</label>
-    <input type="date" class= "myInput" id="feelings" placeholder="Enter your trip start date">
-    <button id="submitBtn" type = "submit"> Submit </button>
-  </div>
-  <div class ="holder entry">
-    <div class = "title" id="boardTitle">Trip Details</div>
-    <div id = "entryHolder">
+
+  <div class="holder tripContent">
     <div id = "tripTitle"></div>
     <div id = "date"></div>
-    <div>
-      <div id = "currentWeather"> Current Weather</div>
+    <div id = "tripCountDown"></div>
+    <div id = "currentWeather"></div>
+    <div class="weatherDisplay">
       <img src="" alt="" id="weatherIcon" class="icon"/>
-      <div id = "weatherDescription"></div>
+      <div id = "weatherDescription1"></div>
     </div>
-    <div>
-      <img src="" alt="" id="cityImage"/>
-    </div>
+    <div id = "weatherDescription2"></div>
+
   </div>
+
+  <div class="holder photoFrame">
+    <img src="" alt="" id="cityImage"/>
   </div>
+
+
+  <div class ="holder tripInput">
+    <label for="cityName">Enter City here</label>
+    <input type="text" id="city" placeholder="ex: Hanoi">
+    <label>What is your trip start date?</label>
+    <input type="date" id="tripStartDate">
+    <button id="submitBtn" type = "submit"> Save trip </button>
+  </div>
+
 </div>
   <script>
     // Check that service workers are supported
