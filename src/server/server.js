@@ -12,6 +12,7 @@ const weatherBitKey = `&key=${process.env.WEATHER_API_KEY}`;
 //Pixabay API
 const pixabayBaseUrl = "https://pixabay.com/api/";
 const pixabayKey = `?key=${process.env.PIXABAY_API_KEY}`;
+const pixabayParams = "&category=people&image_type=photo&orientation=horizontal&safesearch=true&per_page=100";
 
 // Setup empty JS object to act as endpoint for all routes
 let projectData = {};
@@ -95,12 +96,12 @@ app.get('/getData', getData);
 
 function getData(req, res) {
     res.send(projectData);
-    console.log("=== getProjectData === ^^^^^^^^^ ");
-    console.log(projectData);
     console.log("=== getProjectData === ::::::::: ");
+    console.log(projectData);
+    console.log("=== getProjectData === ^^^^^^^^^ ");
 }
 
-//POST route
+//GET route
 app.get('/getWeatherData', getWeatherData);
 
 async function getWeatherData(req, res) {
@@ -130,4 +131,34 @@ async function getWeatherData(req, res) {
   }
 }
 
+//GET route
+app.get('/getCityPhoto', getCityPhoto);
+
+async function getCityPhoto(req, res) {
+
+  const city = projectData.city;
+
+  console.log("=== getCityPhoto === : city " + city);
+
+  let fetchUrl =`${pixabayBaseUrl}${pixabayKey}&q=${city}${pixabayParams}`;
+
+  console.log(fetchUrl);
+
+  const response = await fetch(fetchUrl);
+
+  try {
+    const data = await response.json();
+
+    if (data.totalHits > 0) {
+      projectData["image"] = data.hits[0].webformatURL;
+    } else {
+      projectData["image"] = "";
+    }
+
+    console.log(projectData);
+    res.send(projectData);
+  } catch (err) {
+    console.log("getCityPhoto error: ", err);
+  }
+}
 

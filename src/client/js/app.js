@@ -1,4 +1,6 @@
 // Create a new date instance dynamically with JS
+// import Img from '../img/no_photo.jpg'
+
 const defaultCityName = 'hanoi'
 
 let d = new Date();
@@ -23,6 +25,8 @@ async function handleSubmit(e) {
     if (200 === res.status) {
         // res = await getData('/getWeatherData');
         await getData('/getWeatherData');
+
+        await getData('/getCityPhoto');
     }
 
     updateUI(res);
@@ -75,13 +79,14 @@ const updateUI = async(res_data) => {
     try {
         const data = await request.json();
 
-        //reset dashboard
+        //reset infoboard
         document.getElementById('boardTitle').innerHTML = "";
         document.getElementById('tripTitle').innerHTML = "";
         document.getElementById('date').innerHTML = "";
         document.getElementById('currentWeather').innerHTML = "";
         document.getElementById('weatherDescription').innerHTML = "";
         document.getElementById('weatherIcon').src = "";
+        document.getElementById('cityImage').src = "";
 
         if (res_data.status === 200) {
             document.getElementById('boardTitle').innerHTML = "Trip details";
@@ -90,6 +95,8 @@ const updateUI = async(res_data) => {
             document.getElementById('currentWeather').innerHTML = "Current weather";
             document.getElementById('weatherIcon').src = `https://www.weatherbit.io/static/img/icons/${data.icon}.png`;
             document.getElementById('weatherDescription').innerHTML = data.description + ", temperature: " + data.temp + "°C";
+            document.getElementById('cityImage').src = data.image;
+            // document.getElementById('cityImage').src = Img;
         } else {
             document.getElementById('boardTitle').innerHTML = "Error: " + res_data.statusText;
 
@@ -102,5 +109,6 @@ const updateUI = async(res_data) => {
 export {
     handleSubmit,
     postData,
+    getData,
     updateUI
 }
