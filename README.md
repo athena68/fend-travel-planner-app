@@ -27,7 +27,7 @@ So firstly, you have to create accounts and you will be given a license key to s
 ```
 GEONAME_API_KEY=**************************
 WEATHER_API_KEY=**************************
-PIXABAY_API
+PIXABAY_API=**************************
 ```
 
 ## Running
