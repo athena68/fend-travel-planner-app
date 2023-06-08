@@ -30,6 +30,19 @@ body{
     margin-top: 4px;
 }
 
+#submitBtn:hover, focus {
+    margin-top: 4px;
+    width: 320px;
+    height: 60px;
+    background: #f0d43a;
+    color: #3b4a6b;
+    font-size: 26px;
+    font-family: 'Oswald', sans-serif;
+    border: none;
+    box-shadow: 2px 4px 5px #444;
+}
+
+
 .holder{
     // border: 2px solid #fff;
     // border-radius: 4px;
@@ -95,7 +108,7 @@ input{
     border: none;
 }
 
-button{
+button {
     width: 320px;
     height: 60px;
     background: #3b4a6b;
@@ -103,8 +116,9 @@ button{
     font-size: 26px;
     font-family: 'Oswald', sans-serif;
     border: none;
-    box-shadow: 2px 4px 5px #444;
+    transition: 0.25s;
 }
+
 h1{
     font-size: 36px;
 }
