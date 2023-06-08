@@ -2,16 +2,24 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
+//For review only, it should not be placed here
+const GEONAME_API_KEY='tuan86';
+const WEATHER_API_KEY='61413263c4d34c6fab0fe2cd06c41ae4';
+const PIXABAY_API_KEY='37091459-627fec30add696a570035ddc8';
+
 // Geonames API
 const geoNameBaseUrl = "http://api.geonames.org/searchJSON?q=";
-const geonamesUser = `&username=${process.env.GEONAME_API_KEY}`;
+// const geonamesUser = `&username=${process.env.GEONAME_API_KEY}`;
+const geonamesUser = `&username=${GEONAME_API_KEY}`;
 const geonamesParams = "&maxRows=10";
 //Weatherbit API
 const weatherBitBaseUrl = "https://api.weatherbit.io/v2.0/forecast/daily?";
-const weatherBitKey = `&key=${process.env.WEATHER_API_KEY}`;
+// const weatherBitKey = `&key=${process.env.WEATHER_API_KEY}`;
+const weatherBitKey = `&key=${WEATHER_API_KEY}`;
 //Pixabay API
 const pixabayBaseUrl = "https://pixabay.com/api/";
-const pixabayKey = `?key=${process.env.PIXABAY_API_KEY}`;
+// const pixabayKey = `?key=${process.env.PIXABAY_API_KEY}`;
+const pixabayKey = `?key=${PIXABAY_API_KEY}`;
 const pixabayParams = "&category=buildings&image_type=photo&orientation=horizontal&safesearch=true&per_page=100";
 
 // Setup empty JS object to act as endpoint for all routes
